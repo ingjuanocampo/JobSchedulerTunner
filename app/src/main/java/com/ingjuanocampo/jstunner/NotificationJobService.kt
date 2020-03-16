@@ -8,14 +8,17 @@ import android.app.job.JobService
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import java.util.concurrent.TimeUnit
 
 /**
  * The Service that JobScheduler runs once the conditions are met.
  * In this case it posts a notification.
  */
 class NotificationJobService : JobService() {
+    private lateinit var task: AsyncTask<Void, Void, Void>
     // Notification manager.
     var mNotifyManager: NotificationManager? = null
 
@@ -28,10 +31,28 @@ class NotificationJobService : JobService() {
      * In this case, it is false since the notification can be posted on
      * the main thread.
      */
-    override fun onStartJob(jobParameters: JobParameters): Boolean { // Create the notification channel.
+    override fun onStartJob(jobParameters: JobParameters): Boolean {
+
+        task = object: AsyncTask<Void, Void, Void>() {
+            override fun doInBackground(vararg params: Void?): Void? {
+                Thread.sleep(TimeUnit.MINUTES.toMillis(1))
+                return null
+            }
+
+            override fun onPostExecute(result: Void?) {
+                super.onPostExecute(result)
+                createNotificationAndNotify()
+            }
+
+        }
+        return true
+    }
+
+    private fun createNotificationAndNotify() {
+
+        // Create the notification channel.
         createNotificationChannel()
-        // Set up the notification content intent to launch the app when
-// clicked.
+        // Set up the notification content intent to launch the app when // clicked.
         val contentPendingIntent = PendingIntent.getActivity(
             this, 0, Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT
@@ -48,7 +69,6 @@ class NotificationJobService : JobService() {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setAutoCancel(true)
         mNotifyManager!!.notify(0, builder.build())
-        return false
     }
 
     /**
@@ -61,7 +81,8 @@ class NotificationJobService : JobService() {
      * @return Boolean indicating whether the job needs rescheduling.
      */
     override fun onStopJob(jobParameters: JobParameters): Boolean {
-        return false
+        task?.cancel(true)
+        return true
     }
 
     /**
