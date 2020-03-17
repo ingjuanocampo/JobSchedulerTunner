@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.ingjuanocampo.jstunner.R
 import com.ingjuanocampo.jstunner.NotificationJobService
 import kotlinx.android.synthetic.main.main_fragment.*
+import java.util.concurrent.TimeUnit
 
 
 class MainFragment : Fragment() {
@@ -79,6 +80,8 @@ class MainFragment : Fragment() {
             .setRequiredNetworkType(selectedNetworkOption)
             .setRequiresDeviceIdle(idleSwitch.isChecked)
             .setRequiresCharging(chargingSwitch.isChecked)
+
+        builder.setPeriodic(TimeUnit.HOURS.toMillis(getHoursPeriod().toLong()))
         if (seekBarSet) {
             builder.setOverrideDeadline(seekBar.progress * 1000.toLong())
         }
@@ -96,6 +99,14 @@ class MainFragment : Fragment() {
                 requireContext(), R.string.no_constraint_toast,
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun getHoursPeriod(): Int {
+        return if (hoursPeriod.text.isNotBlank()) {
+            Integer.valueOf(hoursPeriod.text.toString())
+        } else {
+            24
         }
     }
 

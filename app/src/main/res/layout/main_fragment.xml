@@ -94,6 +94,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/view_margin" />
 
+    <TextView
+        android:id="@+id/hoursPeriod"
+        android:layout_margin="@dimen/view_margin"
+        android:hint="Repeat every HRs:"
+        android:layout_width="wrap_content"
+        android:inputType="number"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/scheduleJob"
         android:layout_width="wrap_content"

@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
  * In this case it posts a notification.
  */
 class NotificationJobService : JobService() {
-    private lateinit var task: AsyncTask<Void, Void, Void>
+    private var task: AsyncTask<Void, Void, Void>? = null
     // Notification manager.
     var mNotifyManager: NotificationManager? = null
 
@@ -32,23 +32,27 @@ class NotificationJobService : JobService() {
      * the main thread.
      */
     override fun onStartJob(jobParameters: JobParameters): Boolean {
+        createNotificationAndNotify("Job starting")
 
         task = object: AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg params: Void?): Void? {
-                Thread.sleep(TimeUnit.MINUTES.toMillis(1))
+                Thread.sleep(TimeUnit.SECONDS.toMillis(10))
                 return null
             }
 
             override fun onPostExecute(result: Void?) {
                 super.onPostExecute(result)
-                createNotificationAndNotify()
+                createNotificationAndNotify("Job done !")
+                task = null
+                jobFinished(jobParameters, false)
             }
 
         }
+        task?.execute()
         return true
     }
 
-    private fun createNotificationAndNotify() {
+    private fun createNotificationAndNotify(message: String) {
 
         // Create the notification channel.
         createNotificationChannel()
@@ -62,7 +66,7 @@ class NotificationJobService : JobService() {
                 PRIMARY_CHANNEL_ID
             )
                 .setContentTitle(getString(R.string.job_service))
-                .setContentText(getString(R.string.job_running))
+                .setContentText(message)
                 .setContentIntent(contentPendingIntent)
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -82,6 +86,7 @@ class NotificationJobService : JobService() {
      */
     override fun onStopJob(jobParameters: JobParameters): Boolean {
         task?.cancel(true)
+        createNotificationAndNotify("Job has been cancelled")
         return true
     }
 
