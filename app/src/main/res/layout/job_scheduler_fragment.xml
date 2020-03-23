@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    tools:context="com.ingjuanocampo.jstunner.ui.main.JobSchedulerFragment"
     android:padding="@dimen/layout_padding">
 
     <TextView

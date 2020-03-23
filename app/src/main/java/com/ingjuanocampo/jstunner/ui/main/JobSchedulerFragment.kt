@@ -15,17 +15,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.ingjuanocampo.jstunner.R
 import com.ingjuanocampo.jstunner.NotificationJobService
-import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.job_scheduler_fragment.*
 import java.util.concurrent.TimeUnit
 
 
-class MainFragment : Fragment() {
+class JobSchedulerFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = JobSchedulerFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: JobSchedulerViewModel
 
     private val JOB_ID = 0
     private var mScheduler: JobScheduler? = null
@@ -34,12 +34,12 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.job_scheduler_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(JobSchedulerViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragmentFragment">
+
+    <fragment
+        android:id="@+id/homeFragmentFragment"
+        android:name="com.ingjuanocampo.jstunner.ui.main.HomeFragmentFragment"
+        android:label="fragment_home_fragment"
+        tools:layout="@layout/fragment_home_fragment" >
+        <action
+            android:id="@+id/action_homeFragmentFragment_to_jobSchedulerFragment"
+            app:destination="@id/jobSchedulerFragment" />
+        <action
+            android:id="@+id/action_homeFragmentFragment_to_workManager"
+            app:destination="@id/workManager" />
+    </fragment>
+    <fragment
+        android:id="@+id/jobSchedulerFragment"
+        android:name="com.ingjuanocampo.jstunner.ui.main.JobSchedulerFragment"
+        android:label="job_scheduler_fragment" />
+    <fragment
+        android:id="@+id/workManager"
+        android:name="com.ingjuanocampo.jstunner.ui.main.WorkManager"
+        android:label="work_manager_fragment"
+        tools:layout="@layout/work_manager_fragment" />
+</navigation>
