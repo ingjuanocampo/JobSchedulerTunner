@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 
 import com.ingjuanocampo.jstunner.R
 import kotlinx.android.synthetic.main.fragment_home_fragment.*
@@ -45,7 +46,16 @@ class HomeFragmentFragment : Fragment() {
 
 
     private fun onJobManagerButtonPressed() {
-        findNavController().navigate(R.id.jobSchedulerFragment,  null)
+        val options = navOptions {
+            anim {
+                enter = R.anim.slide_in_right
+                exit = R.anim.slide_out_left
+                popEnter = R.anim.slide_in_left
+                popExit = R.anim.slide_out_right
+            }
+        }
+
+        findNavController().navigate(R.id.jobSchedulerFragment,  null, options)
 
     }
 
