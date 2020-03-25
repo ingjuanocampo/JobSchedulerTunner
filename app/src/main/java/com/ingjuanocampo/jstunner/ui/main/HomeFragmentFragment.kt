@@ -55,12 +55,12 @@ class HomeFragmentFragment : Fragment() {
             }
         }
 
-        findNavController().navigate(R.id.jobSchedulerFragment,  null, options)
+        findNavController().navigate(R.id.action_homeFragmentFragment_to_jobSchedulerFragment,  null, options)
 
     }
 
     private fun onWorkManagerButtonPressed() {
-        findNavController().navigate(R.id.workManager,  null)
+        findNavController().navigate(R.id.action_homeFragmentFragment_to_workManager,  null)
     }
 
 

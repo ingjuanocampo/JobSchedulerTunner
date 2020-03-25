@@ -14,6 +14,11 @@
             android:id="@+id/action_homeFragmentFragment_to_jobSchedulerFragment"
             app:destination="@id/jobSchedulerFragment" />
         <action
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_homeFragmentFragment_to_workManager"
             app:destination="@id/workManager" />
     </fragment>
